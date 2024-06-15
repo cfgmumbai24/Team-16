@@ -73,6 +73,13 @@ public class BuyerRepository {
         return Map.of("message", "Enquiry not submitted");
     }
 
+    public Map<String, Object> getProduct(int id) {
+        try {
+            return jdbcTemplate.queryForMap("SELECT * from products where product_id = ?", id);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
 
 }

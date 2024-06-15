@@ -27,6 +27,12 @@ public class BuyerController {
     public Map<String,Object> submitEnquiry(@RequestBody Map<String,Object> body) throws Exception {
         return buyerService.submitEnquiry(body);
     }
+    @GetMapping("/get-product/{id}")
+    public Map<String,Object> getProduct(@PathVariable int id) {
+        return buyerService.getProduct(id);
+    }
+
+
 
 
 }

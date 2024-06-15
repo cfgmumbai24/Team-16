@@ -29,6 +29,4 @@ public class SubAdminController {
     @PostMapping("/adding-seller")
     public ResponseEntity<Map<String, Object>> addSeller(@RequestBody Map<String, Object> body) {
         return subAdminService.addSeller(body);
-    }
-
-}
+    }}

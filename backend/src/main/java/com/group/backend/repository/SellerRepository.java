@@ -13,7 +13,7 @@ public class SellerRepository {
     JdbcTemplate jdbcTemplate;
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final int CODE_LENGTH = 6;
-    public int uploads(String file , String name , String price, String description, int category_id)
+    public int uploads(String file , String name , int price, String description, int category_id)
     {
         Map<String,Object> map = jdbcTemplate.queryForMap("SELECT category_iniitials from category where category_id = ?",category_id);
         String randomCode = generateRandomCode(CODE_LENGTH);

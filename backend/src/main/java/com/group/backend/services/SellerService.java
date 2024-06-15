@@ -22,7 +22,7 @@ public class SellerService {
     @Autowired
     SellerRepository sellerRepository;
 
-    public ResponseEntity<Map<String,String>> addProduct(MultipartFile file , String name , String price, String description, int category_id){
+    public ResponseEntity<Map<String,String>> addProduct(MultipartFile file , String name , int price, String description, int category_id){
         System.out.println("fileContent = " + file);
         String category = sellerRepository.getCategory(category_id);
         Path uploads = Paths.get("images/"+category+"/");

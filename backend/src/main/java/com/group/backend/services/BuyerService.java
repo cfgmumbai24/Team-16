@@ -30,5 +30,10 @@ BuyerRepository buyerRepository;
         List<Map<String,Object>>  cartItems= (List<Map<String, Object>>) body.get("cartItems");
          return buyerRepository.submitEnquiry(name, email, phone, additionalInfo , cartItems);
     }
+    public Map<String,Object> getProduct(int id) {
+        return buyerRepository.getProduct(id);
+    }
+
+
 
 }

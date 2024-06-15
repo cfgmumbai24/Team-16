@@ -30,5 +30,9 @@ public class SubAdminRepository {
         return jdbcTemplate.update("EXEC sp_register_user ? , ? , ?,  ?, ? , ? ",email,name,password,role_id,category_id);
     }
 
+    public Map<String,Object> getProductById(int id)
+    {
+        return jdbcTemplate.queryForMap("SELECT * FROM products WHERE product_id = ?",id);
+    }
 
 }
