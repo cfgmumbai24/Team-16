@@ -81,7 +81,7 @@ const Categories = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 bg-[#F8F4E1]" id='categories'>
+    <div className="container mx-auto mb-16 px-4 bg-white" id='categories'>
       <h2 className="text-4xl font-bold text-center my-8 text-[#543310]">
         Our <span className="text-[#543310]">Categories</span>
       </h2>
