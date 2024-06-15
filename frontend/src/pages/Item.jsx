@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import product1Image from '../assets/image1.jpg'; // Importing product1.jpg
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import product1Image from '../assets/image1.jpg';
+import { FaTrash } from 'react-icons/fa';
 
 const Item = () => {
-    // Sample product data
     const product = {
         id: 1,
         name: "Example Product",
@@ -15,8 +16,8 @@ const Item = () => {
     const [quantity, setQuantity] = useState(1);
     const [cartQuantity, setCartQuantity] = useState(0);
     const [addedToCart, setAddedToCart] = useState(false);
+    const navigate = useNavigate(); // Initialize useNavigate
 
-    // Load initial cart quantity from local storage
     useEffect(() => {
         const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
         const currentItem = storedCart.find(item => item.id === product.id);
@@ -26,7 +27,6 @@ const Item = () => {
         }
     }, []);
 
-    // Event handler for changing quantity
     const handleQuantityChange = (event) => {
         const value = parseInt(event.target.value);
         if (!isNaN(value) && value >= 1 && value <= product.stock) {
@@ -34,7 +34,6 @@ const Item = () => {
         }
     };
 
-    // Event handler for adding to cart
     const handleAddToCart = () => {
         const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
         const currentItem = storedCart.find(item => item.id === product.id);
@@ -50,35 +49,41 @@ const Item = () => {
         setAddedToCart(true);
     };
 
-    // Event handler for removing from cart
-    const handleRemoveFromCart = () => {
+    const handleResetCart = () => {
         const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
         const currentItemIndex = storedCart.findIndex(item => item.id === product.id);
 
         if (currentItemIndex !== -1) {
-            if (storedCart[currentItemIndex].quantity > 1) {
-                storedCart[currentItemIndex].quantity -= 1;
-                setCartQuantity(storedCart[currentItemIndex].quantity);
-            } else {
-                storedCart.splice(currentItemIndex, 1);
-                setCartQuantity(0);
-                setAddedToCart(false);
-            }
-
+            storedCart.splice(currentItemIndex, 1);
+            setCartQuantity(0);
+            setAddedToCart(false);
             localStorage.setItem('cart', JSON.stringify(storedCart));
         }
+    };
+
+    const handleIncreaseQuantity = () => {
+        if (quantity < product.stock) {
+            setQuantity(quantity + 1);
+        }
+    };
+
+    const handleDecreaseQuantity = () => {
+        if (quantity > 1) {
+            setQuantity(quantity - 1);
+        }
+    };
+
+    const handleCheckout = () => {
+        navigate('/checkout'); // Navigate to the checkout page
     };
 
     return (
         <div className="min-h-screen bg-gradient-to-r from-[#AF8F6F] to-[#74512D] flex items-center justify-center py-8">
             <div className="max-w-screen-xl mx-auto py-8 px-4 sm:px-6 lg:px-8 bg-white rounded-lg shadow-lg">
                 <div className="flex flex-wrap -mx-4">
-                    {/* Product Images Section */}
                     <div className="w-full md:w-1/2 px-4 mb-4 flex justify-center">
                         <img src={product1Image} alt="Product" className="max-w-full h-auto rounded-md shadow-md" />
                     </div>
-
-                    {/* Product Details Section */}
                     <div className="w-full md:w-1/2 px-4 mb-4 flex items-center">
                         <div className="p-6 text-black">
                             <h2 className="text-4xl font-bold mb-2 text-gray-800">{product.name}</h2>
@@ -87,16 +92,23 @@ const Item = () => {
                                 <p className="text-2xl font-semibold mb-2 text-gray-800">${product.price.toFixed(2)}</p>
                                 <label htmlFor="quantity" className="block mb-1 text-gray-800">Quantity:</label>
                                 <div className="flex items-center">
-                                    <select
+                                    <button
+                                        className="py-1 px-3 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-l"
+                                        onClick={handleDecreaseQuantity}
+                                    >-</button>
+                                    <input
                                         id="quantity"
-                                        className="w-1/4 border border-gray-300 rounded py-1 px-2 text-sm focus:outline-none focus:border-blue-500 text-black bg-white"
+                                        className="w-1/4 border border-gray-300 py-1 text-center text-sm focus:outline-none focus:border-blue-500 text-black bg-white"
                                         value={quantity}
                                         onChange={handleQuantityChange}
-                                    >
-                                        {[...Array(product.stock)].map((_, index) => (
-                                            <option key={index + 1} value={index + 1}>{index + 1}</option>
-                                        ))}
-                                    </select>
+                                        type="number"
+                                        min="1"
+                                        max={product.stock}
+                                    />
+                                    <button
+                                        className="py-1 px-3 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-r"
+                                        onClick={handleIncreaseQuantity}
+                                    >+</button>
                                 </div>
                             </div>
                             <div className="flex space-x-4 items-center">
@@ -110,11 +122,17 @@ const Item = () => {
                                     <>
                                         <button
                                             className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:bg-red-600"
-                                            onClick={handleRemoveFromCart}
+                                            onClick={handleResetCart}
                                         >
-                                            Remove from Cart
+                                            <FaTrash />
                                         </button>
                                         <span className="text-gray-800">Items in cart: {cartQuantity}</span>
+                                        <button
+                                            className="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600 focus:outline-none focus:bg-yellow-600"
+                                            onClick={handleCheckout}
+                                        >
+                                            Checkout
+                                        </button>
                                     </>
                                 ) : (
                                     <span className="text-gray-800">There are no items in the cart</span>
