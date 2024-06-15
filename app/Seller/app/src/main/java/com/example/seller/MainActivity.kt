@@ -20,6 +20,7 @@ import org.opencv.core.Core
 import org.opencv.core.CvType
 import org.opencv.core.Mat
 import org.opencv.imgproc.Imgproc
+import java.io.ByteArrayOutputStream
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,11 +75,17 @@ class MainActivity : AppCompatActivity() {
         Imgproc.Laplacian(gray, laplacian, CvType.CV_64F)
         val variance = Core.mean(laplacian).`val`[0]
         Toast.makeText(this,"${variance}",Toast.LENGTH_SHORT).show()
-        if (variance < 0.03) {
+        if (variance >0) {
             Toast.makeText(this, "Image too blurry", Toast.LENGTH_SHORT).show()
             return
         }
 
         Toast.makeText(this, "Image quality is good", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, ResultActivity::class.java)
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        val byteArray = stream.toByteArray()
+        intent.putExtra("image", byteArray)
+        startActivity(intent)
     }
 }
