@@ -20,53 +20,55 @@ const imageMap = {
 };
 
 const Categories = () => {
-  const [categories, setCategories] = useState([{
-    category_id: 1,
-    category_name: 'Terracotta Ornaments & Home Décor',
-    image: image1,
-    },
-    {
-    category_id: 2,
-    category_name: 'Macrame Based Handicraft',
-    image: image2,
-    },
-    {
-    category_id: 3,
-    category_name: 'Jute Bags & Allied Products',
-    image: image3,
-    },
-    {
-    category_id: 4,
-    category_name: 'Macrame Based Handicraft',
-    image: image4,
-    },
-    {
-    category_id: 5,
-    category_name: 'Banana Fiber based ornaments & Home Décor',
-    image: image5,
-    },
-    {
-    category_id: 6,
-    category_name: 'others',
-    image: image6,
-    },
-    ]);
+  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([{
+  //   category_id: 1,
+  //   category_name: 'Terracotta Ornaments & Home Décor',
+  //   image: image1,
+  //   },
+  //   {
+  //   category_id: 2,
+  //   category_name: 'Macrame Based Handicraft',
+  //   image: image2,
+  //   },
+  //   {
+  //   category_id: 3,
+  //   category_name: 'Jute Bags & Allied Products',
+  //   image: image3,
+  //   },
+  //   {
+  //   category_id: 4,
+  //   category_name: 'Macrame Based Handicraft',
+  //   image: image4,
+  //   },
+  //   {
+  //   category_id: 5,
+  //   category_name: 'Banana Fiber based ornaments & Home Décor',
+  //   image: image5,
+  //   },
+  //   {
+  //   category_id: 6,
+  //   category_name: 'others',
+  //   image: image6,
+  //   },
+  //   ]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   axios.get('http://localhost:8080/api/get-categories')
-  //     .then(response => {
-  //       setCategories(response.data);
-  //       setLoading(false);
-  //     })
-  //     .catch(error => {
-  //       console.error('Error fetching the categories:', error);
-  //       setError('Failed to load categories. Please try again later.');
-  //       setLoading(false);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios.get('http://localhost:8080/api/get-categories')
+      .then(response => {
+        setCategories(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching the categories:', error);
+        setError('Failed to load categories. Please try again later.');
+        setLoading(false);
+      });
+    console.log(categories);
+  }, []);
 
   const handleCategoryClick = () => {
     navigate(`/product`);
@@ -87,15 +89,15 @@ const Categories = () => {
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {categories.map((category) => (
-          <div 
-            key={category.category_id} 
+          <div
+            key={category.category_id}
             className="relative group overflow-hidden rounded-lg shadow-md"
             onClick={handleCategoryClick}
           >
             <div className="overflow-hidden">
-              <img 
-                src={imageMap[category.category_id] || image1} 
-                alt={`Category ${category.category_name}`} 
+              <img
+                src={imageMap[category.category_id] || image1}
+                alt={`Category ${category.category_name}`}
                 className="w-full h-64 object-cover transition-transform transform group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center text-white text-lg font-semibold transition-opacity opacity-0 group-hover:opacity-100">

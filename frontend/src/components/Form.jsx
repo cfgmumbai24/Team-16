@@ -15,7 +15,7 @@ const Form = () => {
     // Fetch cart items from local storage
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
     setCartItems(storedCart);
-    
+
     // Calculate the total price
     const total = storedCart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     setTotalPrice(total);
