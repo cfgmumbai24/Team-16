@@ -21,4 +21,9 @@ public class SubAdminController {
         return subAdminService.getEnquiries();
     }
 
+    @GetMapping("/get-request")
+    public List<Map<String, Object>> getProductsAtLevel0() {
+        return subAdminService.getProductsAtLevel0();
+    }
+
 }

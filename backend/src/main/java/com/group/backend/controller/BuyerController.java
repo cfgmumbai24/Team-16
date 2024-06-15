@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(value = "http://127.0.0.1:5173/")
+@CrossOrigin(value = "http://localhost:5173/")
 @RequestMapping("/api")
 public class BuyerController {
     @Autowired
