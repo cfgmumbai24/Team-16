@@ -1,6 +1,6 @@
 # Team-16
 
-![Logo](static/unknown.png)
+![Logo](src/assests/logo.jpg)
 
 # Problem Statement
 
