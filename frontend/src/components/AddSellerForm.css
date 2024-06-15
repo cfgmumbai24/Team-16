@@ -1,0 +1,226 @@
+body {
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    /* Center align horizontally */
+    align-items: center;
+    /* Center align vertically */
+    height: 100vh;
+    /* Full viewport height */
+    margin: 0;
+}
+
+.input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Center align horizontally */
+    width: 100%;
+    /* Full width of the container */
+    max-width: 360px;
+    /* Limit maximum width to 360px */
+    height: 60px;
+    background: #eaeaea;
+    border-radius: 6px;
+    padding: 0 10px;
+    margin: 0 auto;
+    /* Center align horizontally */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: auto;
+    background: #fff;
+    padding-bottom: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.text {
+    color: #AF8F6F;
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.underline {
+    width: 61px;
+    height: 6px;
+    background: #AF8F6F;
+    border-radius: 9px;
+}
+
+.inputs {
+    margin-top: 35px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.input {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    /* Full width of the container */
+    max-width: 360px;
+    /* Limit maximum width to 360px */
+    height: 60px;
+    background: #eaeaea;
+    border-radius: 6px;
+    padding: 0 10px;
+}
+
+.input img {
+    margin: 0 10px;
+}
+
+.input input {
+    flex: 1;
+    height: 40px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #797979;
+    font-size: 16px;
+    padding-left: 10px;
+}
+
+.submit-container {
+    display: flex;
+    justify-content: center;
+    margin: 10px auto;
+}
+
+.submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 180px;
+    height: 49px;
+    color: #fff;
+    background: #AF8F6F;
+    border-radius: 50px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.submit:hover {
+    background: #8c724c;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+}
+
+.modal-text {
+    color: #000;
+    /* Ensure text is black */
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* AddSellerForm.css */
+
+/* Other styles remain unchanged */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+}
+
+.modal-text {
+    color: #000;
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.cancel {
+    background: #eaeaea;
+    color: #676767;
+    border-radius: 50px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cancel:hover {
+    background: #ccc;
+}
+
+.cancel {
+    background: #eaeaea;
+    color: #676767;
+    border-radius: 50px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cancel:hover {
+    background: #ccc;
+}

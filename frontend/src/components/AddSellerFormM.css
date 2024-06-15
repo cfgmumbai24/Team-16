@@ -1,0 +1,119 @@
+/* AddSellerFormM.css */
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.text {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.underline {
+    width: 50px;
+    height: 4px;
+    background-color: #007bff;
+    margin: 10px auto;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    margin-bottom: 15px;
+}
+
+.input label {
+    margin-bottom: 10px;
+    /* Increased margin for gap */
+    display: block;
+}
+
+.input input,
+.input select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: black;
+}
+
+.input select option {
+    color: black;
+}
+
+.submit-container {
+    text-align: center;
+}
+
+.submit {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.submit:hover {
+    background-color: #0056b3;
+}
+
+.toggle-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.toggle-label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.toggle-label input {
+    display: none;
+}
+
+.toggle-label .slider {
+    width: 50px;
+    height: 24px;
+    background-color: #ccc;
+    border-radius: 24px;
+    position: relative;
+    margin: 0 10px;
+    transition: background-color 0.2s;
+}
+
+.toggle-label input:checked+.slider {
+    background-color: #007bff;
+}
+
+.toggle-label .slider::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.2s;
+}
+
+.toggle-label input:checked+.slider::before {
+    transform: translateX(26px);
+}
