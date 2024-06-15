@@ -1,0 +1,116 @@
+.container {
+    display: flex;
+    width: 400px;
+    /* Reduced width */
+    height: 550px;
+    flex-direction: column;
+    margin: 0 auto;
+    margin-bottom: 40px;
+    background: #fff;
+    padding-bottom: 10px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.text {
+    color: #AF8F6F;
+    font-size: 36px;
+    /* Reduced font size */
+    font-weight: 700;
+}
+
+.underline {
+    width: 61px;
+    height: 6px;
+    background: #AF8F6F;
+    border-radius: 9px;
+}
+
+.inputs {
+    margin-top: 35px;
+    /* Reduced margin */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* Reduced gap */
+}
+
+.input {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 360px;
+    /* Reduced width */
+    height: 60px;
+    /* Reduced height */
+    background: #eaeaea;
+    border-radius: 6px;
+}
+
+.input img {
+    margin: 0px 20px;
+    /* Reduced margin */
+}
+
+.input input {
+    height: 40px;
+    /* Reduced height */
+    width: 280px;
+    /* Reduced width */
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #797979;
+    font-size: 16px;
+    /* Reduced font size */
+}
+
+.forgot-password {
+    padding-left: 52px;
+    /* Reduced padding */
+    margin-top: 22px;
+    /* Reduced margin */
+    color: #797979;
+    font-size: 16px;
+    /* Reduced font size */
+}
+
+.forget-password span {
+    color: #AF8F6F;
+    cursor: pointer;
+}
+
+.submit-container {
+    display: flex;
+    gap: 20px;
+    /* Reduced gap */
+    margin: 10px auto;
+}
+
+.submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 180px;
+    /* Reduced width */
+    height: 49px;
+    /* Reduced height */
+    color: #fff;
+    background: #AF8F6F;
+    border-radius: 50px;
+    font-size: 16px;
+    /* Reduced font size */
+    cursor: pointer;
+}
+
+.gray {
+    background: #eaeaea;
+    color: #676767;
+}

@@ -8,4 +8,10 @@ services:
   ai:
     build: ./ai
     ports: 
-        - 5930:5930
+        - 5390:5390
+  backend:
+    build: ./backend
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
