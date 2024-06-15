@@ -25,9 +25,10 @@ public class SubAdminRepository {
     {
         return jdbcTemplate.queryForList("SELECT * FROM orders o INNER JOIN order_products op ON o.order_id = op.order_id INNER JOIN products p ON op.product_id = p.product_id");
     }
-    public List<Map<String,Object>> updateStatus()
+    public int addSeller(String name,String email,String password,int category_id,int role_id)
     {
-        return jdbcTemplate.queryForList("SELECT * FROM orders o INNER JOIN order_products op ON o.order_id = op.order_id INNER JOIN products p ON op.product_id = p.product_id");
+        return jdbcTemplate.update("EXEC sp_register_user ? , ? , ?,  ?, ? , ? ",email,name,password,role_id,category_id);
     }
+
 
 }

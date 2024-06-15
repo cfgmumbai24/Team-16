@@ -26,4 +26,9 @@ public class SubAdminController {
         return subAdminService.getProductsAtLevel0();
     }
 
+    @PostMapping("/adding-seller")
+    public ResponseEntity<Map<String, Object>> addSeller(@RequestBody Map<String, Object> body) {
+        return subAdminService.addSeller(body);
+    }
+
 }
