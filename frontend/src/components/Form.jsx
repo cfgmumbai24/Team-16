@@ -4,7 +4,7 @@ const Form = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phoneNumber: '',
+    phone: '',
     additionalInfo: ''
   });
 
@@ -34,7 +34,7 @@ const Form = () => {
 
     // Send the form data to the backend
     try {
-      const response = await fetch('https://your-backend-endpoint.com/api/send-email', {
+      const response = await fetch('http://localhost:8080/api/submit-enquiry', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
