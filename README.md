@@ -1,6 +1,6 @@
 # Team-16
 
-![Logo](.assests/logo.jpg)
+![Logo.png](https://github.com/cfgmumbai24/Team-16/blob/main/frontend/src/assets/logo.png)
 
 # Problem Statement
 
