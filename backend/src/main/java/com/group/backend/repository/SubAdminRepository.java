@@ -25,5 +25,9 @@ public class SubAdminRepository {
     {
         return jdbcTemplate.queryForList("SELECT * FROM orders o INNER JOIN order_products op ON o.order_id = op.order_id INNER JOIN products p ON op.product_id = p.product_id");
     }
-    
+    public List<Map<String,Object>> updateStatus()
+    {
+        return jdbcTemplate.queryForList("SELECT * FROM orders o INNER JOIN order_products op ON o.order_id = op.order_id INNER JOIN products p ON op.product_id = p.product_id");
+    }
+
 }
