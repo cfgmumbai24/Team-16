@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  db:
+    build: ./db
+    ports:
+        - 1433:1433
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+
