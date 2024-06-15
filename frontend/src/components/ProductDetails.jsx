@@ -58,7 +58,7 @@ const ProductPage = () => {
                             <h2 className="text-4xl font-bold mb-2 text-gray-800">{product.name}</h2>
                             <p className="text-lg mb-4 text-gray-600">{product.description}</p>
                             <div className="mb-4">
-                                <p className="text-2xl font-semibold mb-2 text-gray-800">${product.price.toFixed(2)}</p>
+                                <p className="text-2xl font-semibold mb-2 text-gray-800">Rs.{product.price.toFixed(2)}</p>
                                 <label htmlFor="quantity" className="block mb-1 text-gray-800">Quantity:</label>
                                 <div className="flex items-center">
                                     <select
