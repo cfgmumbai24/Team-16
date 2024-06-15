@@ -30,6 +30,7 @@ public class BuyerRepository {
     public List<Map<String,Object>> getProducts() {
         try {
             List<Map<String, Object>> products = jdbcTemplate.queryForList("SELECT * from products");
+            System.out.println(products);
             return products;
         } catch (Exception e) {
             return null;
@@ -68,8 +69,6 @@ public class BuyerRepository {
         if((int)newId.get("new_id")>0){
             sendMail(email,name,phone);
             return Map.of("message", "Enquiry submitted successfully");
-
-
         }
         return Map.of("message", "Enquiry not submitted");
     }
