@@ -14,7 +14,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.opencv.android.OpenCVLoader
@@ -25,9 +27,17 @@ import org.opencv.core.Mat
 import org.opencv.core.MatOfDouble
 import org.opencv.imgproc.Imgproc
 import java.io.ByteArrayOutputStream
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var imageUri: Uri
     private val REQUEST_GALLERY = 2
+
+    private val contract = registerForActivityResult(ActivityResultContracts.GetContent()) {
+        imageUri =  it!!
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -52,6 +62,8 @@ class MainActivity : AppCompatActivity() {
                 checkImageQuality_capture(photo)
             }
         }
+
+
 
         findViewById<Button>(R.id.captureButton).setOnClickListener {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -107,8 +119,8 @@ class MainActivity : AppCompatActivity() {
         Core.meanStdDev(laplacian, meanMat, stdDevMat)
         val stdDev = stdDevMat.get(0, 0)[0]
         val variance = stdDev * stdDev
-        Toast.makeText(this,"${variance}",Toast.LENGTH_SHORT).show()
-        if (variance<300) {
+        //Toast.makeText(this,"${variance}",Toast.LENGTH_SHORT).show()
+        if (variance<100) {
             Toast.makeText(this, "Image too blurry", Toast.LENGTH_SHORT).show()
 
             return
@@ -120,6 +132,7 @@ class MainActivity : AppCompatActivity() {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
         val byteArray = stream.toByteArray()
         intent.putExtra("image", byteArray)
+
         startActivity(intent)
     }
 
@@ -147,7 +160,7 @@ class MainActivity : AppCompatActivity() {
         Core.meanStdDev(laplacian, meanMat, stdDevMat)
         val stdDev = stdDevMat.get(0, 0)[0]
         val variance = stdDev * stdDev
-        Toast.makeText(this,"${variance}",Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this,"${variance}",Toast.LENGTH_SHORT).show()
         if (variance < 500) {
             Toast.makeText(this, "Image too blurry", Toast.LENGTH_SHORT).show()
             return
@@ -161,4 +174,6 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("image", byteArray)
         startActivity(intent)
     }
+
+
 }
