@@ -5,3 +5,7 @@ services:
     build: ./db
     ports:
         - 1433:1433
+  ai:
+    build: ./ai
+    ports: 
+        - 5930:5930
