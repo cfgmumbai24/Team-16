@@ -15,4 +15,7 @@ To enhance sales performance and adapt to evolving market trends and consumer be
 
 <br>
 
-## Contributions
+## Architechture Diagram
+
+![architecture.jpg](https://github.com/cfgmumbai24/Team-16/blob/main/frontend/src/assets/architecture.jpg)
+
