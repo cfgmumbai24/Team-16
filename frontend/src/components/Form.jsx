@@ -11,15 +11,15 @@ const Form = () => {
     const [cartItems, setCartItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
 
-    useEffect(() => {
-        // Fetch cart items from local storage
-        const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-        setCartItems(storedCart);
+  useEffect(() => {
+    // Fetch cart items from local storage
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    setCartItems(storedCart);
 
-        // Calculate the total price
-        const total = storedCart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-        setTotalPrice(total);
-    }, []);
+    // Calculate the total price
+    const total = storedCart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    setTotalPrice(total);
+  }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;

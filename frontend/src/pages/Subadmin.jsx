@@ -8,7 +8,7 @@ const Subadmin = () => {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const apiUrl = "https://77f8-167-103-2-95.ngrok-free.app";
+  const apiUrl = "http://localhost:8080";
 
   useEffect(() => {
     fetchRequests();

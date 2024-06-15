@@ -3,57 +3,60 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Products = () => {
-  const [products, setProducts] = useState([{
-    "product_id": 1,
-    "product_name": "Laptop",
-    "SKU": "LP1001",
-    "product_price": 999,
-    "product_description": "High-performance laptop",
-    "category_id": 1,
-    "image": "https://placehold.co/600x400/EEE/31343C",
-    },
-    {
-    "product_id": 2,
-    "product_name": "Smartphone",
-    "SKU": "SP1002",
-    "product_price": 699,
-    "product_description": "Latest model smartphone",
-    "category_id": 2,
-    "image": "https://placehold.co/600x400/EEE/31343C",
-    },
-    {
-    "product_id": 3,
-    "product_name": "Wireless Mouse",
-    "SKU": "WM1003",
-    "product_price": 25,
-    "product_description": "Ergonomic wireless mouse",
-    "category_id": 3,
-    "image": "https://placehold.co/600x400/EEE/31343C",
-    },
-    {
-    "product_id": 4,
-    "product_name": "Bluetooth Speaker",
-    "SKU": "BS1004",
-    "product_price": 49,
-    "product_description": "Portable Bluetooth speaker",
-    "category_id": 4,
-    "image": "https://placehold.co/600x400/EEE/31343C",
-    },
-    {
-    "product_id": 5,
-    "product_name": "Smartwatch",
-    "SKU": "SW1005",
-    "product_price": 199,
-    "product_description": "Fitness tracking smartwatch",
-    "category_id": 2,
-    "image": "https://placehold.co/600x400/EEE/31343C",
-    }]);
+  const [products, setProducts] = useState([])
+  // const [products, setProducts] = useState([{
+  //   "product_id": 1,
+  //   "product_name": "Laptop",
+  //   "SKU": "LP1001",
+  //   "product_price": 999,
+  //   "product_description": "High-performance laptop",
+  //   "category_id": 1,
+  //   "image": "https://placehold.co/600x400/EEE/31343C",
+  //   },
+  //   {
+  //   "product_id": 2,
+  //   "product_name": "Smartphone",
+  //   "SKU": "SP1002",
+  //   "product_price": 699,
+  //   "product_description": "Latest model smartphone",
+  //   "category_id": 2,
+  //   "image": "https://placehold.co/600x400/EEE/31343C",
+  //   },
+  //   {
+  //   "product_id": 3,
+  //   "product_name": "Wireless Mouse",
+  //   "SKU": "WM1003",
+  //   "product_price": 25,
+  //   "product_description": "Ergonomic wireless mouse",
+  //   "category_id": 3,
+  //   "image": "https://placehold.co/600x400/EEE/31343C",
+  //   },
+  //   {
+  //   "product_id": 4,
+  //   "product_name": "Bluetooth Speaker",
+  //   "SKU": "BS1004",
+  //   "product_price": 49,
+  //   "product_description": "Portable Bluetooth speaker",
+  //   "category_id": 4,
+  //   "image": "https://placehold.co/600x400/EEE/31343C",
+  //   },
+  //   {
+  //   "product_id": 5,
+  //   "product_name": "Smartwatch",
+  //   "SKU": "SW1005",
+  //   "product_price": 199,
+  //   "product_description": "Fitness tracking smartwatch",
+  //   "category_id": 2,
+  //   "image": "https://placehold.co/600x400/EEE/31343C",
+  //   }]);
   const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('http://localhost:8080/api/get-products')
       .then(response => setProducts(response.data))
       .catch(error => console.error('Error fetching products:', error));
+
+    console.log(products);
   }, []);
 
   const handleProductClick = (productId) => {
@@ -75,7 +78,7 @@ const Products = () => {
             onClick={() => handleProductClick(product.product_id)}
           >
             <h2 className="text-xl font-semibold">{product.product_name}</h2>
-            <img src={product.image} alt={product.product_name} className="w-full h-48 object-cover rounded-lg mt-4" />
+            <img src={`${"http://localhost:8080/api/getUploadfiles/"}${product.product_image}`} alt={product.product_name} className="w-full h-48 object-cover rounded-lg mt-4" />
             <p className="mt-4">{product.product_description}</p>
             <p className="mt-2 text-lg font-semibold">${product.product_price}</p>
           </div>

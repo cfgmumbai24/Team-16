@@ -24,7 +24,8 @@ public class SellerService {
 
     public ResponseEntity<Map<String,String>> addProduct(MultipartFile file , String name , String price, String description, int category_id){
         System.out.println("fileContent = " + file);
-        Path uploads = Paths.get("images");
+        String category = sellerRepository.getCategory(category_id);
+        Path uploads = Paths.get("images/"+category+"/");
         if(!Files.exists(uploads)) {
             try {
                 Files.createDirectory(uploads);
@@ -33,6 +34,8 @@ public class SellerService {
             }
         }
 
+
+
         System.out.println(file.getOriginalFilename());
         String cleandFileName = StringUtils.cleanPath(file.getOriginalFilename());
         Path newPath = uploads.resolve(cleandFileName);
@@ -40,7 +43,7 @@ public class SellerService {
         {
             InputStream is = file.getInputStream();
             Files.copy(is,newPath, StandardCopyOption.REPLACE_EXISTING);
-            sellerRepository.uploads(file.getOriginalFilename(),name,price,description,category_id);
+            sellerRepository.uploads(category+"="+file.getOriginalFilename(),name,price,description,category_id);
 
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -21,8 +21,7 @@ public class BuyerRepository {
 
     public List<Map<String, Object>> getCategories() {
         try {
-            List<Map<String, Object>> categories = jdbcTemplate.queryForList("SELECT * from category");
-            return categories;
+            return jdbcTemplate.queryForList("SELECT * from category");
         } catch (Exception e) {
             return null;
         }

@@ -27,7 +27,7 @@ public class SellerController {
     @GetMapping(value = "/getUploadfiles/{file}",produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public byte[] getImage(@PathVariable String file) throws IOException {
         System.out.println(file);
-        String filename = file;
+        String filename = file.replace("=", "/");
         File serverFile = new File("images/" + filename);
         return Files.readAllBytes(serverFile.toPath());
     }
