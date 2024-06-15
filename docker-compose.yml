@@ -3,7 +3,5 @@ version: '3'
 services:
   db:
     build: ./db
-    environment:
-      - SA_PASSWORD=$SA_PASSWORD
     ports:
         - 1433:1433
