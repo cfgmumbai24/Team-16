@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F8F4E1">
+
+    <ImageView
+        android:id="@+id/capturedImageView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="100dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="Captured Image" />
+
+    <Spinner
+        android:id="@+id/categorySpinner"
+        android:backgroundTint="@color/white"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" />
+    <EditText
+        android:id="@+id/editTextLatitude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Product Name"
+        android:paddingTop="40dp"
+        android:textColor="@color/black"
+        android:inputType="text"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        style="@style/ThemeOverlay.Material3.Button.TonalButton"
+        android:backgroundTint="#AF8F6F"
+        android:id="@+id/submitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit" />
+
+</LinearLayout>
