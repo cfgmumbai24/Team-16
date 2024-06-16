@@ -10,6 +10,7 @@ const Form = () => {
 
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [showSuccess, setShowSuccess] = useState(false); // State for success message
 
   useEffect(() => {
     // Fetch cart items from local storage
@@ -49,10 +50,12 @@ const Form = () => {
         },
         body: JSON.stringify({ ...formData, cartItems, totalPrice })
       });
-      console.log(cartItems);
 
       if (response.ok) {
-        alert('Form submitted successfully');
+        setShowSuccess(true); // Show success message
+        setTimeout(() => {
+          setShowSuccess(false); // Hide success message after 3 seconds
+        }, 3000);
       } else {
         alert('Failed to submit form');
       }
@@ -72,75 +75,8 @@ const Form = () => {
   return (
     <div className="max-w-md mx-auto mt-10">
       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-            Name<span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-            Email<span className="text-red-500">*</span>
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
-            Phone Number<span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            name="phone"
-            id="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="additionalInfo">
-            Additional Info
-          </label>
-          <textarea
-            name="additionalInfo"
-            id="additionalInfo"
-            value={formData.additionalInfo}
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </div>
-        <div className="mb-4">
-          <h3 className="text-xl font-bold mb-2">Cart Items</h3>
-          {cartItems.length === 0 ? (
-            <p className="text-gray-700">No items in the cart</p>
-          ) : (
-            <ul className="text-gray-700">
-              {cartItems.map(item => (
-                <li key={item.id} className="mb-2">
-                  <span className="font-bold">{item.name}</span> - Rs.{item.price.toFixed(2)} x {item.quantity}
-                </li>
-              ))}
-            </ul>
-          )}
-          <p className="text-gray-700 mt-4">Total Price: ${totalPrice.toFixed(2)}</p>
-        </div>
+        {/* Form fields */}
+
         <div className="flex items-center justify-between">
           <button
             type="submit"
@@ -157,6 +93,13 @@ const Form = () => {
           </button>
         </div>
       </form>
+
+      {/* Success message */}
+      {showSuccess && (
+        <div className="fixed bottom-0 left-0 right-0 bg-green-500 text-white text-center py-2">
+          Form submitted successfully!
+        </div>
+      )}
     </div>
   );
 };
