@@ -62,9 +62,10 @@ public class BuyerRepository {
     public Map<String, Object> submitEnquiry(String name, String email, String phone, String additionalInfo , List<Map<String,Object>> cartItems) throws MessagingException {
         System.out.println("name = " + name + " email = " + email + " phone = " + phone + " additionalInfo = " + additionalInfo + " cartItems = " + cartItems);
         Map<String,Object> newId = jdbcTemplate.queryForMap("EXEC insert_enquiry ?, ?, ?, ?", name , email , phone , additionalInfo);
+        System.out.println(newId);
         for(int i =0;i<cartItems.size();i++){
             Map<String,Object> cartItem = cartItems.get(i);
-            jdbcTemplate.update("INSERT INTO [dbo].[enquiry_products] ([enquiry_id],[product_id],[quantity]) VALUES  (?, ?, ?)", (int)newId.get("new_id"),(int) cartItem.get("productId"),(int) cartItem.get("quantity"));
+            jdbcTemplate.update("INSERT INTO [dbo].[enquiry_products] ([enquiry_id],[product_id],[quantity]) VALUES  (?, ?, ?)", (int)newId.get("new_id"),(int) cartItem.get("product_id"),(int) cartItem.get("quantity"));
         }
         if((int)newId.get("new_id")>0){
             sendMail(email,name,phone);

@@ -1,17 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import product1Image from "./Product1.jpg"; // Importing product1.jpg
 
 const ProductPage = () => {
-    // Sample product data
-    const product = {
-        id: 1,
-        name: "Example Product",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        price: 29.99,
-        images: [],
-        stock: 10
-    };
 
+
+    const [product, setProduct] = useState({});
     const [quantity, setQuantity] = useState(1);
     const [cartQuantity, setCartQuantity] = useState(0);
     const [selectedQuantity, setSelectedQuantity] = useState(1);
@@ -23,7 +16,17 @@ const ProductPage = () => {
         if (!isNaN(value) && value >= 1 && value <= product.stock) {
             setQuantity(value);
         }
+
     };
+    const fetchData(() => {
+        console.log("hi")
+        axios.get('http://localhost:8080/api/get-products/' + productId)
+            .then(response => setProduct(response.data))
+            .catch(error => console.error('Error fetching products:', error));
+    })
+    useEffect(() => {
+        fetchData();
+    }, [])
 
     // Event handler for selecting quantity
     const handleSelectQuantity = () => {
@@ -49,16 +52,16 @@ const ProductPage = () => {
                 <div className="flex flex-wrap -mx-4">
                     {/* Product Images Section */}
                     <div className="w-full md:w-1/2 px-4 mb-4 flex justify-center">
-                        <img src={product1Image} alt="Product" className="max-w-full h-auto rounded-md shadow-md" />
+                        <img src={product.product_image} alt="Product" className="max-w-full h-auto rounded-md shadow-md" />
                     </div>
 
                     {/* Product Details Section */}
                     <div className="w-full md:w-1/2 px-4 mb-4 flex items-center">
                         <div className="p-6 text-black">
-                            <h2 className="text-4xl font-bold mb-2 text-gray-800">{product.name}</h2>
-                            <p className="text-lg mb-4 text-gray-600">{product.description}</p>
+                            <h2 className="text-4xl font-bold mb-2 text-gray-800">{product.product_name}</h2>
+                            <p className="text-lg mb-4 text-gray-600">{product.product_description}</p>
                             <div className="mb-4">
-                                <p className="text-2xl font-semibold mb-2 text-gray-800">Rs.{product.price.toFixed(2)}</p>
+                                <p className="text-2xl font-semibold mb-2 text-gray-800">Rs.{product.product_price.toFixed(2)}</p>
                                 <label htmlFor="quantity" className="block mb-1 text-gray-800">Quantity:</label>
                                 <div className="flex items-center">
                                     <select

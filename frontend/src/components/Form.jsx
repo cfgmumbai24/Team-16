@@ -133,8 +133,8 @@ const Form = () => {
           ) : (
             <ul className="text-gray-700">
               {cartItems.map(item => (
-                <li key={item.id} className="mb-2">
-                  <span className="font-bold">{item.name}</span> - Rs.{item.price.toFixed(2)} x {item.quantity}
+                <li key={item.product_id} className="mb-2">
+                  <span className="font-bold">{item.product_name}</span> - Rs.{item.product_price} x {item.quantity}
                 </li>
               ))}
             </ul>

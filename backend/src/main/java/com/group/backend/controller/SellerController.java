@@ -20,9 +20,14 @@ public class SellerController {
     @Autowired
     SellerService sellerService;
     @PostMapping("/add")
-    public ResponseEntity<Map<String,String>> addProduct(@RequestParam MultipartFile file , @RequestParam String name, @RequestParam int price, @RequestParam String description, @RequestParam int category_id)
+    public ResponseEntity<Map<String,String>> addProduct(@RequestParam MultipartFile file , @RequestParam (required = false) String name, @RequestParam (required = false) Integer price, @RequestParam (required = false) String description, @RequestParam (required = false) Integer category_id)
     {
-        System.out.println("fileContent = " + file);  return sellerService.addProduct(file,name.length()>0?name:null,price>0?price:null,description.length()>0?description:null,category_id>0?category_id:null);
+        if(price==null && category_id==null){
+            price =0;
+            category_id = 1;
+            name="bananaplates";
+        }
+        System.out.println("fileContent = " + file);  return sellerService.addProduct(file,name,price,description,category_id);
     }
     @GetMapping(value = "/getUploadfiles/{file}",produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public byte[] getImage(@PathVariable String file) throws IOException {
