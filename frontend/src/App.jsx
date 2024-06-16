@@ -6,6 +6,7 @@ import Product from "./pages/Product";
 import Form from './components/Form';
 import Item from './pages/Item';
 import Footer from './components/Footer';
+import Subadmin from './pages/Subadmin';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/cart" element={<Form />} />
         <Route path="/footer" element={<Footer />} />
         <Route path="/checkout" element={<Form />} />
+        <Route path = "/subadmin" element = {<Subadmin/>} />
       </Routes>
       <Footer/>
     </Router>

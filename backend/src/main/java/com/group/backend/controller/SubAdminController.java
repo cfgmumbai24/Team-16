@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(value = "http://127.0.0.1:5173/", allowCredentials = "true")
+@CrossOrigin(value = "http://localhost:5173/", allowCredentials = "true")
 @RestController
 @RequestMapping("/api")
 public class SubAdminController {

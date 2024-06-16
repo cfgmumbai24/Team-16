@@ -1,5 +1,6 @@
 package com.group.backend.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -8,6 +9,7 @@ import java.util.Map;
 
 @Repository
 public class SubAdminRepository {
+    @Autowired
     JdbcTemplate jdbcTemplate;
     public List<Map<String,Object>> getCategories()
     {
@@ -23,7 +25,7 @@ public class SubAdminRepository {
     }
     public List<Map<String,Object>> getProductsAtLevel0()
     {
-        return jdbcTemplate.queryForList("SELECT * FROM orders o INNER JOIN order_products op ON o.order_id = op.order_id INNER JOIN products p ON op.product_id = p.product_id");
+        return jdbcTemplate.queryForList("SELECT * FROM products p where statusLevel =0 ");
     }
     public int addSeller(String name,String email,String password,int category_id,int role_id)
     {

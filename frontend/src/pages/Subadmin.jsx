@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import image1 from '../assets/image1.jpg';
-import Modal from '../components/Modal';
+// import Modal from '../components/Modal';
 import axios from 'axios'; 
 
 const Subadmin = () => {
@@ -15,8 +15,10 @@ const Subadmin = () => {
   }, []);
 
   const fetchRequests = async () => {
-   const response  = await axios.get(apiUrl + "/api/get-products")
+   const response  = await axios.get(apiUrl + "/api/get-request")
    console.log(response);
+   setRequests(response.data)
+   setLoading(false)
     // setTimeout(() => {
     //   setRequests(dummyData);
     //   setLoading(false);
@@ -55,14 +57,14 @@ const Subadmin = () => {
             className="bg-white shadow-md rounded-lg p-4 flex flex-col cursor-pointer"
             onClick={() => openModal(request)}
           >
-            <img src={request.imageUrl} alt={request.productName} className="w-full h-32 object-cover rounded-md mb-4" />
-            <h2 className="text-xl font-semibold mb-2">{request.productName}</h2>
-            <p className="mb-4 text-gray-600">{request.description}</p>
+            <img src={`${"http://localhost:8080/api/getUploadfiles/"}${request.product_image}`} alt={request.product_name} className="w-full h-32 object-cover rounded-md mb-4" />
+            <h2 className="text-xl font-semibold mb-2">{request.product_name}</h2>
+            <p className="mb-4 text-gray-600">{request.product_description}</p>
             <div className="mt-auto flex justify-between">
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleApprove(request.id);
+                  handleApprove(request.product_id);
                 }}
                 className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
               >
@@ -71,7 +73,7 @@ const Subadmin = () => {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleReject(request.id);
+                  handleReject(request.product_id);
                 }}
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
               >
