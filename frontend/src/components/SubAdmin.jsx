@@ -1,126 +1,92 @@
-import React, { useState } from 'react';
-import './AddSellerForm.css';
+import React, { useState, useEffect } from 'react';
+import image1 from '../assets/image1.jpg';
+import Modal from '../components/Modal';
+import axios from 'axios'; 
 
-const citiesInIndia = [
-    'Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Ahmedabad', 'Chennai', 'Kolkata', 'Surat',
-    'Pune', 'Jaipur', 'Lucknow', 'Kanpur', 'Nagpur', 'Indore', 'Thane', 'Bhopal', 'Visakhapatnam',
-    'Pimpri-Chinchwad', 'Patna', 'Vadodara', 'Ghaziabad', 'Ludhiana', 'Agra', 'Nashik', 'Faridabad',
-    'Meerut', 'Rajkot', 'Kalyan-Dombivli', 'Vasai-Virar', 'Varanasi', 'Srinagar', 'Aurangabad',
-    'Dhanbad', 'Amritsar', 'Navi Mumbai', 'Allahabad', 'Howrah', 'Ranchi', 'Gwalior', 'Jabalpur',
-    'Coimbatore', 'Vijayawada', 'Jodhpur', 'Madurai', 'Raipur', 'Kota', 'Guwahati', 'Chandigarh',
-    'Solapur', 'Hubli-Dharwad', 'Bareilly', 'Moradabad', 'Mysore', 'Gurgaon', 'Aligarh', 'Jalandhar',
-    'Tiruchirappalli', 'Bhubaneswar', 'Salem', 'Mira-Bhayandar', 'Warangal', 'Guntur', 'Bhiwandi',
-    'Saharanpur', 'Gorakhpur', 'Bikaner', 'Amravati', 'Noida', 'Jamshedpur', 'Bhilai', 'Cuttack',
-    'Firozabad', 'Kochi', 'Nellore', 'Bhavnagar', 'Dehradun', 'Durgapur', 'Asansol', 'Rourkela',
-    'Nanded', 'Kolhapur', 'Ajmer', 'Akola', 'Gulbarga', 'Jamnagar', 'Ujjain', 'Loni', 'Siliguri',
-    'Jhansi', 'Ulhasnagar', 'Jammu', 'Sangli-Miraj & Kupwad', 'Mangalore', 'Erode', 'Belgaum',
-    'Ambattur', 'Tirunelveli', 'Malegaon', 'Gaya', 'Jalgaon', 'Udaipur', 'Maheshtala'
-];
+const Subadmin = () => {
+  const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const apiUrl = "https://77f8-167-103-2-95.ngrok-free.app";
 
-const AddSellerForm = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        phoneNumber: '',
-        city: '',
-        state: '',
-    });
+  useEffect(() => {
+    fetchRequests();
+  }, []);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
+  const fetchRequests = async () => {
+   const response  = await axios.get(apiUrl + "/api/get-products")
+   console.log(response);
+    // setTimeout(() => {
+    //   setRequests(dummyData);
+    //   setLoading(false);
+    // }, 1000);
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Form submitted', formData);
-        // Add your form submission logic here
-        // Example: Send formData to the server
-        // axios.post('/api/users', formData)
-        //   .then(response => {
-        //     console.log('User added successfully', response);
-        //   })
-        //   .catch(error => {
-        //     console.error('There was an error adding the user!', error);
-        //   });
-    };
+  const handleApprove = (id) => {
+    setRequests((prevRequests) => prevRequests.filter((request) => request.id !== id));
+  };
 
-    return (
-        <div className="container">
-            <div className="header">
-                <h2 className="text">Adding Seller</h2>
-                <div className="underline"></div>
+  const handleReject = (id) => {
+    setRequests((prevRequests) => prevRequests.filter((request) => request.id !== id));
+  };
+
+  const openModal = (product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedProduct(null);
+  };
+
+  if (loading) {
+    return <div className="text-center text-gray-700">Loading...</div>;
+  }
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4 text-center">Product Requests</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {requests.map((request) => (
+          <div
+            key={request.id}
+            className="bg-white shadow-md rounded-lg p-4 flex flex-col cursor-pointer"
+            onClick={() => openModal(request)}
+          >
+            <img src={request.imageUrl} alt={request.productName} className="w-full h-32 object-cover rounded-md mb-4" />
+            <h2 className="text-xl font-semibold mb-2">{request.productName}</h2>
+            <p className="mb-4 text-gray-600">{request.description}</p>
+            <div className="mt-auto flex justify-between">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleApprove(request.id);
+                }}
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
+              >
+                Approve
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleReject(request.id);
+                }}
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Reject
+              </button>
             </div>
-            <form onSubmit={handleSubmit} className="inputs">
-                <div className="input">
-                    <label htmlFor="name"></label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        placeholder="Name"
-                        required
-                    />
-                </div>
-                <div className="input">
-                    <label htmlFor="email"></label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="Email"
-                        required
-                    />
-                </div>
-                <div className="input">
-                    <label htmlFor="phoneNumber"></label>
-                    <input
-                        type="text"
-                        id="phoneNumber"
-                        name="phoneNumber"
-                        value={formData.phoneNumber}
-                        onChange={handleChange}
-                        placeholder="Phone Number"
-                        required
-                    />
-                </div>
-                <div className="input">
-                    <label htmlFor="city"></label>
-                    <input
-                        type="text"
-                        id="city"
-                        name="city"
-                        value={formData.city}
-                        onChange={handleChange}
-                        placeholder="City"
-                        required
-                    />
-                </div>
-                <div className="input">
-                    <label htmlFor="state"></label>
-                    <input
-                        type="text"
-                        id="state"
-                        name="state"
-                        value={formData.state}
-                        onChange={handleChange}
-                        placeholder="State"
-                        required
-                    />
-                </div>
-                <div className="submit-container">
-                    <button type="submit" className="submit">Submit Details</button>
-                </div>
-            </form>
-        </div>
-    );
+          </div>
+        ))}
+      </div>
+
+      {selectedProduct && (
+        <Modal isOpen={isModalOpen} onClose={closeModal} product={selectedProduct} />
+      )}
+    </div>
+  );
 };
 
-export default AddSellerForm;
+export default Subadmin;
