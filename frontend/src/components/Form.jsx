@@ -10,6 +10,7 @@ const Form = () => {
 
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [showSuccess, setShowSuccess] = useState(false); // State for success message
 
   useEffect(() => {
     // Fetch cart items from local storage
@@ -49,10 +50,12 @@ const Form = () => {
         },
         body: JSON.stringify({ ...formData, cartItems, totalPrice })
       });
-      console.log(cartItems);
 
       if (response.ok) {
-        alert('Form submitted successfully');
+        setShowSuccess(true); // Show success message
+        setTimeout(() => {
+          setShowSuccess(false); // Hide success message after 3 seconds
+        }, 3000);
       } else {
         alert('Failed to submit form');
       }
@@ -157,6 +160,13 @@ const Form = () => {
           </button>
         </div>
       </form>
+
+      {/* Success message */}
+      {showSuccess && (
+        <div className="fixed bottom-0 left-0 right-0 bg-green-500 text-white text-center py-2">
+          Form submitted successfully!
+        </div>
+      )}
     </div>
   );
 };
