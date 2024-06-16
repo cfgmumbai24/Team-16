@@ -9,16 +9,23 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.ResponseBody
+import okhttp3.logging.HttpLoggingInterceptor
 import org.opencv.android.OpenCVLoader
 import org.opencv.android.Utils
 import org.opencv.core.Core
@@ -26,6 +33,11 @@ import org.opencv.core.CvType
 import org.opencv.core.Mat
 import org.opencv.core.MatOfDouble
 import org.opencv.imgproc.Imgproc
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.ByteArrayOutputStream
 import java.io.File
 
@@ -85,9 +97,9 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_GALLERY && resultCode == Activity.RESULT_OK && data != null) {
-            val selectedImage: Uri? = data.data
-            if (selectedImage != null) {
-                val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImage)
+            imageUri= data.data!!
+            if (imageUri != null) {
+                val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
                 checkImageQuality_gallery(bitmap)
 
             }
@@ -125,15 +137,15 @@ class MainActivity : AppCompatActivity() {
 
             return
         }
-
+        upload()
         Toast.makeText(this, "Image quality is good", Toast.LENGTH_SHORT).show()
-        val intent = Intent(this, ResultActivity::class.java)
-        val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        val byteArray = stream.toByteArray()
-        intent.putExtra("image", byteArray)
-
-        startActivity(intent)
+//        val intent = Intent(this, ResultActivity::class.java)
+//        val stream = ByteArrayOutputStream()
+//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+//        val byteArray = stream.toByteArray()
+//        intent.putExtra("image", byteArray)
+//
+//        startActivity(intent)
     }
 
     private fun checkImageQuality_capture(bitmap: Bitmap) {
@@ -167,6 +179,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         Toast.makeText(this, "Image quality is good", Toast.LENGTH_SHORT).show()
+
         val intent = Intent(this, ResultActivity::class.java)
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
@@ -175,5 +188,78 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun upload() {
+        //Toast.makeText(this, "Uploading image...", Toast.LENGTH_SHORT).show()
+        val filesDir = applicationContext.filesDir
+        val file = File(filesDir, "image.png")
 
+        val inputStream = contentResolver.openInputStream(imageUri)
+        val outputStream = file.outputStream()
+        inputStream!!.copyTo(outputStream)
+
+        val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
+        val part = MultipartBody.Part.createFormData("file",file.name,requestBody)
+
+        val httpClient = OkHttpClient.Builder()
+        httpClient.addInterceptor(HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        })
+
+
+        val call = ApiClient.apiService.uploadFile(part)
+
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    //val response = response.body()
+                    Toast.makeText(this@MainActivity,"Image Uploaded",Toast.LENGTH_SHORT).show()
+
+                    // Handle the retrieved post data
+                } else {
+                    // Handle error
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                // Handle failure
+            }
+        })
+
+//        retrofit.uploadFile(part)
+
+//        MainActivity.getServerRequests().updateUserPhoto(fileToUpload)
+//            .enqueue(object : Callback<String?>() {
+//                fun onResponse(call: Call<String?>?, response: Response<String?>) {
+//                    if (response.body() != null) {
+//                        System.err.println(response.body())
+//                    } else {
+//                        System.err.println("RESPONSE BODY NULL")
+//                    }
+//                }
+//
+//                fun onFailure(call: Call<String?>?, t: Throwable) {
+//                    System.err.println("UPDATE PHOTO FAIL " + t.message)
+//                }
+//            })
+
+    }
+
+
+}
+
+object RetrofitClient {
+    private const val BASE_URL = "https://ccc1-167-103-2-92.ngrok-free.app"
+
+    val retrofit: Retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+}
+
+object ApiClient {
+    val apiService: ApiService by lazy {
+        RetrofitClient.retrofit.create(ApiService::class.java)
+    }
 }
