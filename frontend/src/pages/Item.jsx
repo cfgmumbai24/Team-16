@@ -97,7 +97,7 @@ const Item = () => {
                 <div className="max-w-screen-xl mx-auto py-8 px-4 sm:px-6 lg:px-8 bg-white rounded-lg shadow-lg">
                     <div className="flex flex-wrap -mx-4">
                         <div className="w-full md:w-1/2 px-4 mb-4 flex justify-center">
-                            <img src={product1Image} alt="Product" className="max-w-full h-auto rounded-md shadow-md" />
+                            <img src={`${"http://localhost:8080/api/getUploadfiles/"}${product.product_image}`}alt="Product" className="max-w-full h-auto rounded-md shadow-md" />
                         </div>
                         <div className="w-full md:w-1/2 px-4 mb-4 flex items-center">
                             <div className="p-6 text-black">
