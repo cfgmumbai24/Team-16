@@ -25,7 +25,7 @@ public class SellerController {
         if(price==null && category_id==null){
             price =0;
             category_id = 1;
-            name="bananaplates";
+            name="teracotta toy";
         }
         System.out.println("fileContent = " + file);  return sellerService.addProduct(file,name,price,description,category_id);
     }
